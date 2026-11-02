@@ -1,0 +1,4 @@
+flappy-bird-gymnasium
+gymnasium
+PyYAML
+torch
