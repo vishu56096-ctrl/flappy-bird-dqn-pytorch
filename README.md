@@ -27,19 +27,18 @@ FlappyBird_RL/
 |-- requirements.txt
 |-- README.md
 |-- assets/
-|   `-- Video Project 1.mp4      # Gameplay/training demo
-`-- runs/                         # Created/updated when the agent runs
+|   |-- demo.gif                 # Inline README preview
+|   `-- Video Project 1.mp4      # Full gameplay/training demo
+`-- runs/
     |-- flappybirdv0.pt           # Best-reward policy weights
-    |-- flappybirdv0_latest.pt    # Latest policy weights for resuming (local)
-    |-- flappybirdv0.log          # New best rewards during training (local)
-    `-- flappybirdv0_episodes.csv # Per-episode metrics (local)
+    |-- flappybirdv0_latest.pt    # Latest policy weights for resuming
+    |-- flappybirdv0.log          # New best rewards during training
+    `-- flappybirdv0_episodes.csv # Per-episode metrics
 ```
 
-Training creates and updates files in `runs/`. The `.gitignore` keeps temporary
-files, training logs, the episode CSV, and the latest checkpoint out of Git. The
-best checkpoint (`runs/flappybirdv0.pt`) is kept so a clone can play the saved
-agent immediately. If you choose not to include that model when publishing,
-train the agent before using `--play`.
+Training creates and updates files in `runs/`. The `.gitignore` excludes
+temporary files but keeps this agent's checkpoints and training history in Git.
+A clone can inspect the CSV and play the best saved model immediately.
 
 ## Requirements and installation
 
@@ -178,9 +177,10 @@ history and run more episodes if you want to compare results.
 
 ## Demo
 
-[Watch the Flappy Bird agent demo](assets/Video%20Project%201.mp4)
+![Flappy Bird DQN demo](assets/demo.gif)
 
-The video is stored in `assets/Video Project 1.mp4` (about 26 MB).
+[Open or download the full video](assets/Video%20Project%201.mp4)
+(about 26 MB).
 
 ## Author
 

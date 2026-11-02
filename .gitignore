@@ -16,6 +16,9 @@ env/
 .DS_Store
 Thumbs.db
 
-# Generated run outputs; keep the best model so a clone can play it
+# Trained model and training history
 runs/*
 !runs/flappybirdv0.pt
+!runs/flappybirdv0_latest.pt
+!runs/flappybirdv0.log
+!runs/flappybirdv0_episodes.csv
