@@ -182,6 +182,9 @@ history and run more episodes if you want to compare results.
 [Open or download the full video](assets/Video%20Project%201.mp4)
 (about 26 MB).
 
+For more information about the project and its learning process, see the
+[Flappy Bird DQN learning document (PDF)](assets/Flappy_Bird_DQN_Project_Report.pdf).
+
 ## Author
 
 Vishal Kumar - [GitHub](https://github.com/vishu56096-ctrl)
