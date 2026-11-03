@@ -16,133 +16,46 @@ exploration; there are no hand-coded rules for avoiding pipes.
 - Hyperparameters loaded from `parameters.yaml`
 - Optional rendered training, headless training, and rendered evaluation
 
-## Project structure
-
-```text
-FlappyBird_RL/
-|-- agent.py
-|-- dqn.py
-|-- experience_replay.py
-|-- parameters.yaml
-|-- requirements.txt
-|-- README.md
-|-- assets/
-|   |-- demo.gif                 # Inline README preview
-|   `-- Video Project 1.mp4      # Full gameplay/training demo
-`-- runs/
-    |-- flappybirdv0.pt           # Best-reward policy weights
-    |-- flappybirdv0_latest.pt    # Latest policy weights for resuming
-    |-- flappybirdv0.log          # New best rewards during training
-    `-- flappybirdv0_episodes.csv # Per-episode metrics
-```
-
-Training creates and updates files in `runs/`. The `.gitignore` excludes
-temporary files but keeps this agent's checkpoints and training history in Git.
-A clone can inspect the CSV and play the best saved model immediately.
-
 ## Requirements and installation
 
-Python 3.13.9 was used to verify this project. Create and activate a virtual
-environment, then install the dependencies:
-
-### Windows PowerShell
+Verified with Python 3.13.9. Create a virtual environment and install
+dependencies:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-If PowerShell prevents environment activation, open a new terminal with the
-environment selected, or run the project's commands with the virtual
-environment's Python executable directly.
-
-### macOS or Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-The dependencies are `flappy-bird-gymnasium`, `gymnasium`, `PyYAML`, and
-`torch`. If you already use Anaconda, activate the environment where these
-packages are installed before running the commands below.
+On macOS or Linux, use `python3 -m venv .venv`, then activate with
+`source .venv/bin/activate` and install with `python -m pip install -r requirements.txt`.
+Dependencies include PyTorch and Gymnasium.
 
 ## Run the agent
 
-Run commands from the project directory, where `agent.py` is located. The
-`flappybirdv0` argument selects the hyperparameter set in `parameters.yaml`.
-
-### Train and watch the agent learn
+Run these commands from the project directory. Training opens the game window
+by default and saves the latest model after each episode:
 
 ```bash
 python agent.py flappybirdv0
 ```
 
-Training is the default unless `--play` is specified. This command opens the
-game window and trains for up to five minutes (with a maximum of 10,000
-episodes). It prints the episode reward, exploration rate (`epsilon`), and
-best reward. The latest policy is saved after every completed episode.
-
-You can stop training with `Ctrl+C`; the latest network weights are saved so
-you can continue later. Resuming loads the latest **network weights**, but
-starts a new replay buffer and optimizer and resets epsilon to its initial
-value.
-
-### Train for a chosen number of episodes
+Train without rendering or watch the best saved model:
 
 ```bash
 python agent.py flappybirdv0 --episodes 5000 --no-render
-```
-
-This runs headlessly for up to 5,000 episodes, unless the reward threshold is
-reached first. To train for a time limit without opening a game window:
-
-```bash
-python agent.py flappybirdv0 --minutes 5 --no-render
-```
-
-To explicitly show the game while training:
-
-```bash
-python agent.py flappybirdv0 --train --render --minutes 5
-```
-
-### Watch the best saved model play
-
-```bash
 python agent.py flappybirdv0 --play
 ```
 
-This loads `runs/flappybirdv0.pt`, does not train, and shows five evaluation
-episodes by default. Change the number of episodes with `--episodes`, for
-example:
+Use `--minutes N` to set a training time limit, or `--episodes N` to set an
+episode limit. Training can be stopped with `Ctrl+C`; the latest model is
+saved, but the replay buffer and optimizer are not restored when resuming.
 
-```bash
-python agent.py flappybirdv0 --play --episodes 20
-```
+## Training history
 
-Use `--no-render` to evaluate without opening a game window.
-
-## Training CSV
-
-Training appends one row for each completed training episode to
-`runs/flappybirdv0_episodes.csv`. The CSV can be opened in Excel, Google Sheets,
-or another spreadsheet program to inspect or graph learning progress.
-
-| Column | Meaning |
-|---|---|
-| `episode` | Episode number, continued from the existing CSV when training resumes. |
-| `reward` | Total reward collected during that training episode. |
-| `epsilon` | Exploration probability after the episode; lower values mean the agent more often chooses the action with the highest predicted Q-value. |
-| `best_reward_so_far` | Highest reward recorded so far in the training log. |
-
-Evaluation with `--play` does not add rows to this CSV. The separate
-`runs/flappybirdv0.log` records only new best rewards, while the `.pt` files
-contain model weights rather than episode metrics.
+Training records episode, reward, and exploration rate in
+`runs/flappybirdv0_episodes.csv`. Evaluation with `--play` does not change this
+file.
 
 ## Hyperparameters
 
